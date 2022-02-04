@@ -1,0 +1,24 @@
+"use strict";
+import fs from "fs";
+import path from "path";
+
+const basename: string = path.basename(__filename);
+
+let controllers: object = {};
+// read all files of controller directory
+fs.readdirSync(__dirname)
+  .filter((file: string) => {
+    return (
+      file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".ts"
+    );
+  })
+  .forEach((file: string) => {
+    //exports[file] = path.join(__dirname, file)
+    import file from path.join(__dirname, file);
+   // const controller = require(path.join(__dirname, file));
+    controllers[path.basename(file, ".ts")] = controller;
+  });
+/**
+ *
+ */
+export = controllers;

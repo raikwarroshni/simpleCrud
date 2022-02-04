@@ -1,0 +1,11 @@
+const express = require('express')
+const router = express.Router()
+const { <%- name.replace("Route", "")%>Controller } = require('../controllers')
+
+router.get('/' , <%- name.replace("Route", "")%>Controller.index)
+router.post('/', <%- name.replace("Route", "")%>Controller.store)
+router.put('/:id', <%- name.replace("Route", "")%>Controller.update)
+router.delete('/', <%- name.replace("Route", "")%>Controller.destroy)
+router.get('/:id', <%- name.replace("Route", "")%>Controller.details)
+
+module.exports = router
