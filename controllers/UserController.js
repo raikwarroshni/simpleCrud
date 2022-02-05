@@ -72,7 +72,7 @@ const showUser = async(req,res)=>{
     created_at:findData.createdAt,
     updated_at:findData.updatedAt
   }
-  console.log(Data,"restvalue");
+  //console.log(Data,"restvalue");
   if(findData){
     return successHandler(res,allStatus.OK,allStatus.USER_DEATILS, Data)
   }else{
@@ -89,7 +89,7 @@ const showAllUser = async (req, res) => {
     let result = await userModel.find({_id: {$ne: _id}})
     let arr =[]
     for(let i=0;i<result.length;i++){
-      let data = {
+      var data = {
         user_id:result[i]._id,
         firstName:result[i].firstName,
         lastName:result[i].lastName,
@@ -99,9 +99,16 @@ const showAllUser = async (req, res) => {
       }
       arr.push(data)
     }
-    return successHandler(res,allStatus.ok, allStatus.FOUND_RECORD, arr)
+    console.log(arr,"arr");
+    if(result){
+      return successHandler(res,allStatus.OK,allStatus.FOUND_RECORD,arr)
+    }else{
+      return successHandler(res,allStatus.OK,allStatus.NOT_FOUND,arr)
+    }
+    
   } catch (error) {
-    return errorHandler(res,allStatus.SERVER_ERROR, allStatus.INTERNAL_ERR)
+    console.log(error);
+   return errorHandler(res,allStatus.SERVER_ERROR,allStatus.INTERNAL_ERR,error)
   }
 }
 
@@ -126,8 +133,6 @@ const editUser = async(req,res)=>{
       _id:id},
       {$set:{firstName:firstName,lastName:lastName}}
     )
-    let v=1;
-    console.log("values are",++v,v++,v);
     return successHandler(res,allStatus.OK,allStatus.RECORD_UPDATE_MSG,userUpdate)
   } catch (error) {
     return errorHandler(res,allStatus.SERVER_ERROR,allStatus.INTERNAL_ERR)
@@ -136,10 +141,13 @@ const editUser = async(req,res)=>{
 
 const truncateTable = async (req,res) =>{
   try {
+    let {id} = req.user
+    console.log(id);
     let deletedata = await userModel.deleteMany({})
-    return(res,allStatus.TRUNCATE,allStatus.OK)
+    console.log(deletedata,".....deleteData");
+    return successHandler(res,allStatus.OK,allStatus.TRUNCATE)
   } catch (error) {
-   return(res,allStatus.SERVER_ERROR,allStatus.INTERNAL_ERR) 
+   return errorHandler(res,allStatus.SERVER_ERROR,allStatus.INTERNAL_ERR) 
   }
     
 }

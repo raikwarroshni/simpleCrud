@@ -9,13 +9,13 @@ const userValidateRule = () => {
         .isAlpha().withMessage('Name must be alpha').isLength({max: 20}).withMessage("max length not more than 20"),
         body('lastName').notEmpty().withMessage("lastName is require"),
         body('email').isEmail().withMessage("invalid email")
-        .custom(async(value)=>{
-            let user = await userModel.findOne({value}).then(user =>{
-                if(user){
-                    return new Error('Email already in use')
-                }
-            })
-        }),
+        .custom(value => {
+            return userModel.findOne({email:value}).then(user => {
+              if (user) {
+                return Promise.reject('E-mail already in use');
+              }
+            });
+          }),
         body('password').isLength({min: 8}).isStrongPassword().withMessage("email must be strong")
     ]
 }

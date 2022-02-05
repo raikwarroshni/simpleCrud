@@ -13,6 +13,7 @@ module.exports = Object.freeze({
     USER_NOT_VALID:"user not valid",
     USER_LOGIN_INCOREECT_EMAIL:"email is not valid",
     FOUND_RECORD: 'Found Record Successfully',
+    NOT_FOUND:"not found record",
     TRUNCATE:"table truncate successfully",
     OK:"200",
     CREATED:"201",
