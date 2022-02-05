@@ -62,7 +62,7 @@ const userLogin = async(req,res)=>{
 const showUser = async(req,res)=>{
   try {
     let {id} = req.user
-  var findData = await userModel.findOne({id})
+  var findData = await userModel.findOne({_id:id})
  // const {password , ...restvalue} = findData
   const Data = {
     id:findData._id,
@@ -133,7 +133,7 @@ const editUser = async(req,res)=>{
       _id:id},
       {$set:{firstName:firstName,lastName:lastName}}
     )
-    return successHandler(res,allStatus.OK,allStatus.RECORD_UPDATE_MSG,userUpdate)
+    return successHandler(res,allStatus.OK,allStatus.RECORD_UPDATE_MSG)
   } catch (error) {
     return errorHandler(res,allStatus.SERVER_ERROR,allStatus.INTERNAL_ERR)
   }
