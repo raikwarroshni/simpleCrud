@@ -117,9 +117,9 @@ const deleteUser = async(req,res)=>{
   let { id } = req.user
   let userdelete = await userModel.deleteOne({id})
   console.log(userdelete,".....");
-  return successHandler(res,200,allStatus.DEL_MSG)
+  return successHandler(res,allStatus.OK,allStatus.DEL_MSG)
   } catch (error) {
-   return errorHandler(res,500,allStatus.INTERNAL_ERR) 
+   return errorHandler(res,allStatus.SERVER_ERROR,allStatus.INTERNAL_ERR) 
   }
 }
 

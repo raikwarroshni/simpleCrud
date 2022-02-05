@@ -16,7 +16,7 @@ const userValidateRule = () => {
               }
             });
           }),
-        body('password').isLength({min: 8}).isStrongPassword().withMessage("email must be strong")
+        body('password').isLength({min: 8}).withMessage("password atlest 8 charater").isStrongPassword().withMessage("password must be strong")
     ]
 }
 
