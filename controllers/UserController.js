@@ -63,14 +63,16 @@ const showUser = async(req,res)=>{
   try {
     let {id} = req.user
   var findData = await userModel.findOne({id})
-  const {password , ...restvalue} = findData
+ // const {password , ...restvalue} = findData
   const Data = {
     id:findData._id,
     firstName:findData.firstName,
     lastName:findData.lastName,
-    email:findData.email
+    email:findData.email,
+    created_at:findData.createdAt,
+    updated_at:findData.updatedAt
   }
-  console.log(findData,"restvalue");
+  console.log(Data,"restvalue");
   if(findData){
     return successHandler(res,allStatus.OK,allStatus.USER_DEATILS, Data)
   }else{
@@ -85,9 +87,21 @@ const showAllUser = async (req, res) => {
   try {
     let {_id} = req.user
     let result = await userModel.find({_id: {$ne: _id}})
-    return successHandler(res, 200, allStatus.FOUND_RECORD, result)
+    let arr =[]
+    for(let i=0;i<result.length;i++){
+      let data = {
+        user_id:result[i]._id,
+        firstName:result[i].firstName,
+        lastName:result[i].lastName,
+        email:result[i].email,
+        created_at:result[i].createdAt,
+        updated_at:result[i].updatedAt
+      }
+      arr.push(data)
+    }
+    return successHandler(res,allStatus.ok, allStatus.FOUND_RECORD, arr)
   } catch (error) {
-    return errorHandler(res, 500, allStatus.INTERNAL_ERR)
+    return errorHandler(res,allStatus.SERVER_ERROR, allStatus.INTERNAL_ERR)
   }
 }
 
@@ -104,25 +118,38 @@ const deleteUser = async(req,res)=>{
 
 const editUser = async(req,res)=>{
   try {
-    let {id} = req.user
+    let { id } = req.user
     console.log(id);
     let{firstName,lastName} = req.body
     console.log(firstName,lastName);
     let userUpdate = await userModel.findOneAndUpdate({
-      _id:"61fb9ec63e6180401263075b"},
-      {$set:{firstName:'roshni'}}
+      _id:id},
+      {$set:{firstName:firstName,lastName:lastName}}
     )
-    console.log(userUpdate,"userUpdate");
-    return successHandler(res,200,allStatus.RECORD_UPDATE_MSG,userUpdate)
+    let v=1;
+    console.log("values are",++v,v++,v);
+    return successHandler(res,allStatus.OK,allStatus.RECORD_UPDATE_MSG,userUpdate)
   } catch (error) {
-    return errorHandler(res,500,allStatus.INTERNAL_ERR)
+    return errorHandler(res,allStatus.SERVER_ERROR,allStatus.INTERNAL_ERR)
   }
 }
+
+const truncateTable = async (req,res) =>{
+  try {
+    let deletedata = await userModel.deleteMany({})
+    return(res,allStatus.TRUNCATE,allStatus.OK)
+  } catch (error) {
+   return(res,allStatus.SERVER_ERROR,allStatus.INTERNAL_ERR) 
+  }
+    
+}
+
 module.exports = {
   userSignUp,
   userLogin,
   showUser,
   showAllUser,
   deleteUser,
-  editUser
+  editUser,
+  truncateTable
 }
