@@ -11,7 +11,7 @@ router.get('/showUserList',verifyTokenFn,userController.showUser)
 router.get('/showUserAll',verifyTokenFn,userController.showAllUser)
 router.delete('/deleteUser',verifyTokenFn,userController.deleteUser)
 router.put('/editUser',verifyTokenFn,userController.editUser)
-router.get('/truncateTable',verifyTokenFn,userController.truncateTable)
+router.get('/truncateTable',userController.truncateTable)
 
 
 module.exports = router

@@ -5,13 +5,16 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
+    "apidoc": "apidoc -i ./ -o documentation",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apidoc": "^0.50.4",
     "bcrypt": "^5.0.1",
     "express": "^4.17.2",
+    "express-handlebars": "^6.0.2",
     "express-validator": "^6.14.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.10",

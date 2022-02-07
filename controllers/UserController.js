@@ -4,7 +4,27 @@ const {successHandler,errorHandler} = require('../helper/statuscode')
 const allStatus = require('../constant/allConstant')
 const { issueJWT } = require('../middleware/jwt')
 
-//console.log(allStatus.USER_CREATED,"allStatus");
+/**
+ * @api {post} /user create User information
+ * @apiName createUser
+ * @apiGroup User
+ * @apiBody {string} [firstname] [user first name]
+ * @apiBody {string} [lastname] [user last name]
+ * @apiBody {string} [email] [user email]
+ * @apiBody {string} [password] [user password]
+ * @apiSuccessExample {json} [success--response]
+ *     HTTP/1.1 201 created
+ *     {
+ *      "message": "user created successfully"
+ *     }
+ * @apiError (Error 500) {string} internal server error
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 500 internal server error
+ *     {
+ *       "error": "internal server error"
+ *     }
+ */
+
 const userSignUp = async (req, res) => {
   try {
     let {firstName,lastName,email,password}=req.body
@@ -31,6 +51,26 @@ const userSignUp = async (req, res) => {
   
 }
 
+/**
+ * @api {post} /user For User login
+ * @apiName loginUser
+ * @apiGroup User
+ * @apiBody {string} [email] [email of user]
+ * @apiBody {string} [password] [password of user]
+ * @apiSuccessExample {json} [success--response]
+ *     HTTP/1.1 200 OK
+ *     {
+ *      "message": "user login successfully",
+ *      "result":"token"
+ *     }
+ * @apiError (Error 400) {string} email not valid
+ * @apiError (Error 400) {string} password not match
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 500 internal server error
+ *     {
+ *       "error": "internal server error"
+ *     }
+ */
 const userLogin = async(req,res)=>{
     try {
       let {email, password} = req.body;
@@ -59,6 +99,31 @@ const userLogin = async(req,res)=>{
     }
 }
 
+/**
+ * @api {get} /user  Show user Profile
+ * @apiName showUser
+ * @apiGroup User
+ * @apiHeader (MyHeaderGroup) {String} authorization Authorization value.
+ * @apiSuccessExample {json} [success--response]
+ *     HTTP/1.1 200 OK
+ *     {
+ *  "message": "user details are",
+ * "result": {
+ *    "id": "61fe47ef97df881d177d41ef",
+ *     "firstName": "hemlrgdht",
+ *    "lastName": "raikwar",
+ *   "email": "somya@yopmail.com",
+ *  "created_at": "2022-02-05T09:48:31.212Z",
+ * "updated_at": "2022-02-05T09:58:39.901Z"
+ *  }
+* }
+ * @apiError (Error 400) {string} user not valid
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 500 internal server error
+ *     {
+ *       "error": "internal server error"
+ *     }
+ */
 const showUser = async(req,res)=>{
   try {
     let {id} = req.user
@@ -82,6 +147,33 @@ const showUser = async(req,res)=>{
     return errorHandler(res,allStatus.SERVER_ERROR,allStatus.INTERNAL_ERR)
   }
 }
+
+
+/**
+ * @api {get} /user  Show all user Profile
+ * @apiName showAllUser
+ * @apiGroup User
+ * @apiHeader (MyHeaderGroup) {String} authorization Authorization value.
+ * @apiSuccessExample {json} [success--response]
+ *     HTTP/1.1 200 OK
+ *     {
+ *  "message": "user details are",
+ * "result": {
+ *    "id": "61fe47ef97df881d177d41ef",
+ *     "firstName": "hemlrgdht",
+ *    "lastName": "raikwar",
+ *   "email": "somya@yopmail.com",
+ *  "created_at": "2022-02-05T09:48:31.212Z",
+ * "updated_at": "2022-02-05T09:58:39.901Z".......
+ *  }
+* }
+ * @apiError (Error 400) {string} user not valid
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 500 internal server error
+ *     {
+ *       "error": "internal server error"
+ *     }
+ */
 
 const showAllUser = async (req, res) => {
   try {
@@ -112,6 +204,25 @@ const showAllUser = async (req, res) => {
   }
 }
 
+
+/**
+ * @api {get} /user  delete user Profile
+ * @apiName deleteUser
+ * @apiGroup User
+ * @apiHeader (MyHeaderGroup) {String} authorization Authorization value.
+ * @apiSuccessExample {json} [success--response]
+ *     HTTP/1.1 200 OK
+ *     {
+ *  "message": "user deleted successfully"
+* }
+ * @apiError (Error 400) {string} user not valid
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 500 internal server error
+ *     {
+ *       "error": "internal server error"
+ *     }
+ */
+
 const deleteUser = async(req,res)=>{
   try {
   let { id } = req.user
@@ -122,6 +233,25 @@ const deleteUser = async(req,res)=>{
    return errorHandler(res,allStatus.SERVER_ERROR,allStatus.INTERNAL_ERR) 
   }
 }
+
+/**
+ * @api {post} /user Edit User information
+ * @apiName editUser
+ * @apiGroup User
+ * @apiBody {string} [firstname] [user first name]
+ * @apiBody {string} [lastname] [user last name]
+ * @apiSuccessExample {json} [success--response]
+ *     HTTP/1.1 201 created
+ *     {
+ *      "message": "user edited successfully"
+ *     }
+ * @apiError (Error 500) {string} internal server error
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 500 internal server error
+ *     {
+ *       "error": "internal server error"
+ *     }
+ */
 
 const editUser = async(req,res)=>{
   try {
@@ -139,10 +269,28 @@ const editUser = async(req,res)=>{
   }
 }
 
+
+/**
+ * @api {get} /user  truncate user collection
+ * @apiName truncateUser
+ * @apiGroup User
+ * @apiSuccessExample {json} [success--response]
+ *     HTTP/1.1 200 OK
+ *     {
+ *  "message": "table truncate successfully"
+* }
+ * @apiError (Error 400) {string} user not valid
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 500 internal server error
+ *     {
+ *       "error": "internal server error"
+ *     }
+ */
+
 const truncateTable = async (req,res) =>{
   try {
-    let {id} = req.user
-    console.log(id);
+    // let {id} = req.user
+    // console.log(id);
     let deletedata = await userModel.deleteMany({})
     console.log(deletedata,".....deleteData");
     return successHandler(res,allStatus.OK,allStatus.TRUNCATE)
