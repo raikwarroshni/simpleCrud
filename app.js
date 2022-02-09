@@ -49,13 +49,13 @@ app.set('view engine', '.hbs')
 app.set('views', path.join(__dirname, 'views'))
 app.use('/v1', router)
 
-// app.get('/', async (req, res) => {
-//   let { data } = await axios.get('https://jsonplaceholder.typicode.com/posts')
-//   return res.render('home/index', {
-//     total: data.length,
-//     posts: data,
-//   })
-// })
+app.get('/', async (req, res) => {
+  let { data } = await axios.get('https://jsonplaceholder.typicode.com/posts')
+  return res.render('home/index', {
+    total: data.length,
+    posts: data,
+  })
+})
 
 app.get('/post/:id', async (req, res) => {
   let { data } = await axios.get(
