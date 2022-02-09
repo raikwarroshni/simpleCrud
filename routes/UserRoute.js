@@ -12,6 +12,9 @@ router.get('/showUserAll',verifyTokenFn,userController.showAllUser)
 router.delete('/deleteUser',verifyTokenFn,userController.deleteUser)
 router.put('/editUser',verifyTokenFn,userController.editUser)
 router.get('/truncateTable',userController.truncateTable)
+router.post('/forgetPassword',userController.forgetPassword)
+router.get('/verifyToken/:token',userController.verifyToken)
+router.post('/resetPassword/:token',userController.resetPassword)
 
 
 module.exports = router

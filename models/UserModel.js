@@ -12,6 +12,16 @@ const userModel = new Schema ({
   },
   password: {
     type: String
+  },
+  otp: {
+    type: String
+  },
+  token: {
+    type: String
+  },
+  isActive: {
+    type: Boolean,
+    default:false
   }
 }, {timestamps: true});
 
