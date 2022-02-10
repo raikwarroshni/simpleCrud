@@ -5,9 +5,10 @@ const router = require('./routes')
 const mongoose = require('mongoose')
 const { engine } = require('express-handlebars')
 const path = require('path')
-const { default: axios } = require('axios')
+const { default: axios } = require('axios').create({baseUrl: "http://localhost:4000/v1/user"});
 const fs = require('fs')
 const handlebar = require('handlebars')
+const { LOGIN_FAIL } = require('./constant/allConstant')
 
 let conn = mongoose
   .connect('mongodb://localhost:27017/testProject', {
@@ -81,13 +82,13 @@ app.get('/post/:id', async (req, res) => {
   return res.send(html)
 })
 
-app.get('/', async (req, res) => {
-    let { data } = await axios.get('http://localhost:4000/v1/user/forgetPassword');
-    console.log(data,".....");
-    return res.render('home/forgetEmail', {
-      data: data,
-    })
-  })
+// app.get('/:id', async (req, res) => {
+//     let { data } = await axios.get(`http://localhost:4000/v1/user/showUser/${id}`);
+//     console.log(data,".....");
+//     return res.render('home/forgetEmail', {
+//       data: data,
+//     })
+//   })
 
 
 app.listen(4000, () => {

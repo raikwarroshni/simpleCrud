@@ -82,19 +82,19 @@ const userSignUp = async (req, res) => {
 const userLogin = async (req, res) => {
   try {
     let { email, password } = req.body;
-    console.log(email, password);
+    //console.log(email, password);
     let check = await userModel.findOne({ email });
-    console.log(check.password, "check...");
+   // console.log(check.password, "check...");
     if (check != null) {
       let checkPassword = await bcrypt.compare(password, check.password);
-      console.log(checkPassword, "checkPassword");
+     // console.log(checkPassword, "checkPassword");
       if (checkPassword == true) {
         let payload = {
           id: check._id,
           email: check.email,
         };
         let token = await issueJWT(payload);
-        console.log(token, "token");
+       // console.log(token, "token");
         return successHandler(
           res,
           allStatus.OK,
@@ -388,6 +388,30 @@ const resetPassword = async (req, res) =>{
   }
 }
 
+const userDetails = async (req, res) =>{
+  try {
+    let  id  = req.params.id;
+  //  console.log(id,"id.....");
+    var findData = await userModel.findOne({ _id: id });
+    // const {password , ...restvalue} = findData
+    const Data = {
+      id: findData._id,
+      firstName: findData.firstName,
+      lastName: findData.lastName,
+      email: findData.email,
+      created_at: findData.createdAt,
+      updated_at: findData.updatedAt,
+    };
+    //console.log(Data,"restvalue");
+    if (findData) {
+      return successHandler(res, allStatus.OK, allStatus.USER_DEATILS, Data);
+    } else {
+      return errorHandler(res, allStatus.BAD_REQUEST, allStatus.USER_NOT_VALID);
+    }
+  } catch (error) {
+    return errorHandler(res,allStatus.SERVER_ERROR,allStatus.INTERNAL_ERR)
+  }
+}
 module.exports = {
   userSignUp,
   userLogin,
@@ -398,7 +422,8 @@ module.exports = {
   truncateTable,
   forgetPassword,
   verifyToken,
-  resetPassword
+  resetPassword,
+  userDetails
 };
 
   

@@ -1,4 +1,3 @@
-const { promise } = require("bcrypt/promises");
 const { body } = require("express-validator");
 const { userModel } = require("../models");
 
@@ -32,6 +31,17 @@ const userValidateRule = () => {
   ];
 };
 
+const validatePassword =  () =>{
+  return[
+    body("password")
+    .isLength({ min: 8 })
+    .withMessage("password atlest 8 charater")
+    .isStrongPassword()
+    .withMessage("password must be strong"),
+  ]
+}
+
 module.exports = {
   userValidateRule,
+  validatePassword
 };
