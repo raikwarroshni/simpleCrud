@@ -22,6 +22,7 @@
     "mongoose": "^6.1.10",
     "mongorestgen": "^1.0.2",
     "nodemailer": "^6.7.2",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "validator": "^13.7.0"
   }
 }
