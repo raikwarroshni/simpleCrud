@@ -93,4 +93,15 @@ For starting the project command- `npm start`
 | `confirmNewPassword`      | `string` | **Required**. |
 
 
+#### truncateTable
+```http
+  get /truncateTable
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `token`      | `string` | **Required**. |
+
+
+
 
