@@ -16,5 +16,6 @@ router.post('/forgetPassword',userController.forgetPassword)
 router.get('/verifyToken/:token',userController.verifyToken)
 router.post('/resetPassword/:token',userValidarionRule.validatePassword(),valid.validate,userController.resetPassword)
 router.get('/showUser/:id',userController.userDetails)
+//router.get('/showUser/:id',userController.userDetails)
 
 module.exports = router
