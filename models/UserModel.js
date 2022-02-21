@@ -14,23 +14,12 @@ const userModel = new Schema ({
     type: String,
     required:true,
     unique:true,
-    lowercase:true,
-    validate(value){
-   if(validator.isEmail(value)){
-     throw new error("emai; is invalid")
-   }
-    }
   },
   password: {
     type: String
   },
   otp: {
     type: String,
-    validate(value){
-      if(value<0){
-        throw new error ("otp can not be null")
-      }
-    }
   },
   token: {
     type: String
