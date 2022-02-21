@@ -9,8 +9,9 @@ project is usefull because it is flexible to use and also use authentication and
 
 ## How user can get started with the project?
 
- First you need to install node environment in your machine you get reference from `https://nodejs.org/en/download/`
- second you have to run command `npm install`
+  you need to install node environment in your machine you get reference from `https://nodejs.org/en/download/`,
+  after that we need to install mongodb you can get reference from `https://www.mongodb.com/try/download/community`,
+ then for  install all package we have to run command `npm install`,and
  For starting the project command- `npm start`
 
 ## API Reference
