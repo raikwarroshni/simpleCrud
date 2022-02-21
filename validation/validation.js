@@ -31,17 +31,17 @@ const userValidateRule = () => {
   ];
 };
 
-const validatePassword =  () =>{
-  return[
+const validatePassword = () => {
+  return [
     body("newPassword")
-    .isLength({ min: 8 })
-    .withMessage("password atlest 8 charater")
-    .isStrongPassword()
-    .withMessage("password must be strong"),
-  ]
-}
+      .isLength({ min: 8 })
+      .withMessage("password atlest 8 charater")
+      .isStrongPassword()
+      .withMessage("password must be strong"),
+  ];
+};
 
 module.exports = {
   userValidateRule,
-  validatePassword
+  validatePassword,
 };

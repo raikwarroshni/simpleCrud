@@ -1,4 +1,4 @@
 module.exports = {
-    valid: require('./valid'),
-    authentication: require('./authentication'),
-}
+  valid: require("./valid"),
+  authentication: require("./authentication"),
+};
