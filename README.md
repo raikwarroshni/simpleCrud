@@ -9,7 +9,9 @@ project is usefull because it is flexible to use and also use authentication and
 
 ## How user can get started with the project?
 
-For starting the project command- `npm start`
+ First you need to install node environment in your machine you get reference from `https://nodejs.org/en/download/`
+ second you have to run command `npm install`
+ For starting the project command- `npm start`
 
 ## API Reference
 
