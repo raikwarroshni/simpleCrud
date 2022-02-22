@@ -1,4 +1,4 @@
-const jsonwebtoken = require("jsonwebtoken");
+const jsonwebtoken = require('jsonwebtoken')
 
 const jwt = {
   //create token
@@ -6,31 +6,31 @@ const jwt = {
     let payload = {
       id: user.id,
       email: user.email,
-    };
+    }
     const options = {
-      expiresIn: "365d",
-    };
-    const jwtToken = await jsonwebtoken.sign(payload, "KEy", options);
-    return jwtToken;
+      expiresIn: '365d',
+    }
+    const jwtToken = await jsonwebtoken.sign(payload, 'KEy', options)
+    return jwtToken
   },
   //verify Token
   verifyTokenFn: async (req, res, next) => {
-    var token = req.headers.authorization;
-    await jsonwebtoken.verify(token, "KEy", function (err, decoded) {
+    var token = req.headers.authorization
+    await jsonwebtoken.verify(token, 'KEy', function (err, decoded) {
       if (err) {
         return res.json({
           status: false,
           statusCode: false,
-          message: "Token not found",
-        });
+          message: 'Token not found',
+        })
       } else {
         req.user = {
           id: decoded.id,
           email: decoded.email,
-        };
-        return next();
+        }
+        return next()
       }
-    });
+    })
   },
-};
-module.exports = jwt;
+}
+module.exports = jwt

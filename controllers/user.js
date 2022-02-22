@@ -1,10 +1,10 @@
-const { userModel } = require("../models");
-const { successHandler, errorHandler } = require("../helper/responseHandler");
-const allStatus = require("../constant/constant");
+const { userModel } = require('../models')
+const { successHandler, errorHandler } = require('../helper/responseHandler')
+const allStatus = require('../constant/constant')
 
 /**
  * @api {get} /user  Show user Profile
- * @apiName showUser
+ * @apiName userDetail
  * @apiGroup User
  * @apiHeader (MyHeaderGroup) {String} authorization Authorization value.
  * @apiSuccessExample {json} [success--response]
@@ -29,27 +29,27 @@ const allStatus = require("../constant/constant");
  */
 const userDetail = async (req, res) => {
   try {
-    let { id } = req.user;
+    let { id } = req.user
     var findData = await userModel.findOne({ _id: id }).select({
       firstName: 1,
       lastName: 1,
       email: 1,
       createdAt: 1,
       updatedAt: 1,
-    });
+    })
     if (findData) {
-      return successHandler(res, allStatus.OK, allStatus.USER_DEATILS, Data);
+      return successHandler(res, allStatus.OK, allStatus.USER_DEATILS, Data)
     } else {
-      return errorHandler(res, allStatus.BAD_REQUEST, allStatus.USER_NOT_VALID);
+      return errorHandler(res, allStatus.BAD_REQUEST, allStatus.USER_NOT_VALID)
     }
   } catch (error) {
-    return errorHandler(res, allStatus.SERVER_ERROR, allStatus.INTERNAL_ERR);
+    return errorHandler(res, allStatus.SERVER_ERROR, allStatus.INTERNAL_ERR)
   }
-};
+}
 
 /**
  * @api {get} /user  Show all user Profile
- * @apiName showAllUser
+ * @apiName userList
  * @apiGroup User
  * @apiHeader (MyHeaderGroup) {String} authorization Authorization value.
  * @apiSuccessExample {json} [success--response]
@@ -75,28 +75,28 @@ const userDetail = async (req, res) => {
 
 const userList = async (req, res) => {
   try {
-    let { _id } = req.user;
+    let { _id } = req.user
     let result = await userModel.find({ _id: { $ne: _id } }).select({
       firstName: 1,
       lastName: 1,
       email: 1,
       createdAt: 1,
       updatedAt: 1,
-    });
+    })
     if (result) {
-      return successHandler(res, allStatus.OK, allStatus.FOUND_RECORD, result);
+      return successHandler(res, allStatus.OK, allStatus.FOUND_RECORD, result)
     } else {
-      return successHandler(res, allStatus.OK, allStatus.NOT_FOUND, result);
+      return successHandler(res, allStatus.OK, allStatus.NOT_FOUND, result)
     }
   } catch (error) {
     return errorHandler(
       res,
       allStatus.SERVER_ERROR,
       allStatus.INTERNAL_ERR,
-      error
-    );
+      error,
+    )
   }
-};
+}
 
 /**
  * @api {get} /user  delete user Profile
@@ -118,17 +118,17 @@ const userList = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    let { id } = req.user;
-    let userdelete = await userModel.deleteOne({ id });
-    return successHandler(res, allStatus.OK, allStatus.DEL_MSG);
+    let { id } = req.user
+    let userdelete = await userModel.deleteOne({ id })
+    return successHandler(res, allStatus.OK, allStatus.DEL_MSG)
   } catch (error) {
-    return errorHandler(res, allStatus.SERVER_ERROR, allStatus.INTERNAL_ERR);
+    return errorHandler(res, allStatus.SERVER_ERROR, allStatus.INTERNAL_ERR)
   }
-};
+}
 
 /**
  * @api {post} /user Edit User information
- * @apiName editUser
+ * @apiName updateUser
  * @apiGroup User
  * @apiBody {string} [firstname] [user first name]
  * @apiBody {string} [lastname] [user last name]
@@ -147,19 +147,19 @@ const deleteUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    let { id } = req.user;
-    let { firstName, lastName } = req.body;
+    let { id } = req.user
+    let { firstName, lastName } = req.body
     let userUpdate = await userModel.findOneAndUpdate(
       {
         _id: id,
       },
-      { $set: { firstName: firstName, lastName: lastName } }
-    );
-    return successHandler(res, allStatus.OK, allStatus.RECORD_UPDATE_MSG);
+      { $set: { firstName: firstName, lastName: lastName } },
+    )
+    return successHandler(res, allStatus.OK, allStatus.RECORD_UPDATE_MSG)
   } catch (error) {
-    return errorHandler(res, allStatus.SERVER_ERROR, allStatus.INTERNAL_ERR);
+    return errorHandler(res, allStatus.SERVER_ERROR, allStatus.INTERNAL_ERR)
   }
-};
+}
 
 /**
  * @api {get} /user  truncate user collection
@@ -180,30 +180,30 @@ const updateUser = async (req, res) => {
 
 const truncateDatabase = async (req, res) => {
   try {
-    let deletedata = await userModel.deleteMany({});
-    return successHandler(res, allStatus.OK, allStatus.TRUNCATE);
+    let deletedata = await userModel.deleteMany({})
+    return successHandler(res, allStatus.OK, allStatus.TRUNCATE)
   } catch (error) {
-    return errorHandler(res, allStatus.SERVER_ERROR, allStatus.INTERNAL_ERR);
+    return errorHandler(res, allStatus.SERVER_ERROR, allStatus.INTERNAL_ERR)
   }
-};
+}
 
 const userDetails = async (req, res) => {
   try {
-    let id = req.params.id;
+    let id = req.params.id
     var findData = await userModel.findOne({ _id: id }).select({
       firstName: 1,
       lastName: 1,
       email: 1,
       createdAt: 1,
       updatedAt: 1,
-    });
+    })
     if (findData) {
-      return successHandler(res, allStatus.OK, allStatus.USER_DEATILS, Data);
+      return successHandler(res, allStatus.OK, allStatus.USER_DEATILS, Data)
     }
   } catch (error) {
-    return errorHandler(res, allStatus.SERVER_ERROR, allStatus.INTERNAL_ERR);
+    return errorHandler(res, allStatus.SERVER_ERROR, allStatus.INTERNAL_ERR)
   }
-};
+}
 module.exports = {
   userDetail,
   userList,
@@ -211,4 +211,4 @@ module.exports = {
   updateUser,
   truncateDatabase,
   userDetails,
-};
+}
